@@ -20,15 +20,15 @@ export function App() {
 			setResults(json);
 		});
 	}
-
 	return (
 		<div className="App">
 			<h1>TCL Career Lab Art Finder</h1>
 			<SearchForm onSearchSubmit={onSearchSubmit} />
 			<ul className="results-list">
+				{/* Implement optional chaining in case results is undefined or null */}
 				{results?.map((artwork) => (
 					<li key={artwork.id}>
-						<h2>{artwork.title}</h2>
+						<h2>Title: {artwork.title}</h2>
 						<p>Artist: {artwork.artist_display || 'Unknown Artist'}</p>
 					</li>
 				))}
