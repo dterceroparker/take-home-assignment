@@ -8,8 +8,9 @@ export function SearchForm({ onSearchSubmit }) {
 	function handleInputChange(evt) {
 		setQuery(evt.target.value);
 	}
-
-	function handleFormSubmit() {
+	// Prevent submission default behavior
+	function handleFormSubmit(evt) {
+		evt.preventDefault();
 		onSearchSubmit(query);
 	}
 
