@@ -35,22 +35,37 @@
  */
 export function searchArtworks(query) {
 	/**
-	 * Get data from `ARTWORKS_SEARCH_RESULT.json`, whuch is served by our
+	 * Get data from `ARTWORKS_SEARCH_RESULT.json`, which is served by our
 	 * local server.
 	 * TODO: replace with path to `/artworks/search/` endpoint,
 	 * as described in README.md.
 	 */
-	const requestUrl = `./ARTWORKS_SEARCH_RESULT.json`;
-
+	/**
+	 * Links used: https://api.artic.edu/docs/#introduction and
+	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
+	 * Global_Objects/encodeURIComponent, https://nodejs.org/en/learn/getting-started/nodejs-the-difference-between-development-and-production
+	 */
 	/**
 	 * We know the API serves JSON data, but
 	 * it's a good idea to explicitly request JSON anyway.
 	 * */
-	const headers = { Accept: 'application/json' };
+	/**
+	 * Development mode
+	 */
+	const isDevelopment = process.env.NODE_ENV !== 'development';
+	if (isDevelopment) {
+		const requestUrl = `./ARTWORKS_SEARCH_RESULT.json`;
+		const headers = { Accept: 'application/json' };
+		return fetch(requestUrl, { headers }).then((res) => {
+			if (!res.ok) {
+				throw new Error(`HTTP error! Network response was not successful`);
+			}
+			return res.json().then((json) => json.data);
+		});
+	}
 
-	return fetch(requestUrl, { headers }).then((res) => {
-		if (res.ok) {
-			return res.json();
-		}
-	});
+	/**
+	 * Production mode
+	 * TODO: replace with actual API request
+	 */
 }
