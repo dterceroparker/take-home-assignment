@@ -1,13 +1,12 @@
 import { useState } from 'react';
-
 import { searchArtworks } from '../api';
-
 import { Footer } from './Footer';
 import { SearchForm } from './SearchForm';
-
 import './App.css';
 
 export function App() {
+	// TODO: Add state to keep track of the current search query and results.
+	const [results, setResults] = useState([]);
 	function onSearchSubmit(query) {
 		// Search for the users's query.
 		// TODO: render the results, instead of logging them to the console.
@@ -17,6 +16,8 @@ export function App() {
 		// @see: ./src/api.js
 		searchArtworks(query).then((json) => {
 			console.log(json);
+			// Update the results state with the returned JSON.
+			setResults(json);
 		});
 	}
 
@@ -24,6 +25,14 @@ export function App() {
 		<div className="App">
 			<h1>TCL Career Lab Art Finder</h1>
 			<SearchForm onSearchSubmit={onSearchSubmit} />
+			<ul className="results-list">
+				{results?.map((artwork) => (
+					<li key={artwork.id}>
+						<h2>{artwork.title}</h2>
+						<p>Artist: {artwork.artist_display || 'Unknown Artist'}</p>
+					</li>
+				))}
+			</ul>
 			<Footer />
 		</div>
 	);

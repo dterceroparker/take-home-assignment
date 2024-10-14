@@ -67,7 +67,8 @@ export function searchArtworks(query) {
 		 */
 	} else {
 		// Use encodeURIComponent to encode query String parameter values
-		const requestUrl = `https://api.artic.edu/api/v1/artworks/search?q=${encodeURIComponent(query)}`;
+		// const requestUrl = `https://api.artic.edu/api/v1/artworks/search?q=${encodeURIComponent(query)}`;
+		const requestUrl = `https://api.artic.edu/api/v1/artworks`;
 		const headers = { Accept: 'application/json' };
 		return fetch(requestUrl, { headers }).then((res) => {
 			if (!res.ok) {
