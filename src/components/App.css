@@ -1,0 +1,12 @@
+.App {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	margin: 0 auto;
+	max-width: 95%;
+	width: 72ch;
+}
+
+.App > h1 {
+	text-align: center;
+}
