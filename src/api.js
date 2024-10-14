@@ -41,9 +41,8 @@ export function searchArtworks(query) {
 	 * as described in README.md.
 	 */
 	/**
-	 * Links used: https://api.artic.edu/docs/#introduction and
-	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
-	 * Global_Objects/encodeURIComponent, https://nodejs.org/en/learn/getting-started/nodejs-the-difference-between-development-and-production
+	 * Articles referenced: https://api.artic.edu/docs/#introduction and
+	 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/ReferenceGlobal_Objects/encodeURIComponent, https://nodejs.org/en/learn/getting-started/nodejs-the-difference-between-development-and-production, https://stackoverflow.com/questions/4540753/should-i-use-encodeuri-or-encodeuricomponent-for-encoding-urls
 	 */
 	/**
 	 * We know the API serves JSON data, but
@@ -62,10 +61,19 @@ export function searchArtworks(query) {
 			}
 			return res.json().then((json) => json.data);
 		});
+		/**
+		 * Production mode
+		 * TODO: replace with actual API request
+		 */
+	} else {
+		// Use encodeURIComponent to encode query String parameter values
+		const requestUrl = `https://api.artic.edu/api/v1/artworks/search?q=${encodeURIComponent(query)}`;
+		const headers = { Accept: 'application/json' };
+		return fetch(requestUrl, { headers }).then((res) => {
+			if (!res.ok) {
+				throw new Error(`HTTP error! Network response was not successful`);
+			}
+			return res.json().then((json) => json.data);
+		});
 	}
-
-	/**
-	 * Production mode
-	 * TODO: replace with actual API request
-	 */
 }
