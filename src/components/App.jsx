@@ -14,6 +14,8 @@ import './App.css';
 export function App() {
 	// TODO: Add state to keep track of the current search query and results.
 	const [results, setResults] = useState([]);
+	const [selectedArtwork, setSelectedArtwork] = useState(null);
+
 	function onSearchSubmit(query) {
 		// Search for the users's query.
 		// TODO: render the results, instead of logging them to the console.
@@ -27,6 +29,9 @@ export function App() {
 			setResults(json);
 		});
 	}
+	const handleArtworkSelection = () => {
+		setSelectedArtwork(artwork);
+	};
 	return (
 		<Router>
 			<div className="App">
@@ -39,12 +44,14 @@ export function App() {
 								<ul className="results-list">
 									{results?.map((artwork) => (
 										<li key={artwork.id}>
-											<NavLink to={`/artwork/${artwork.id}`}>
+											<NavLink
+												to={`/artwork/${artwork.id}`}
+												onClick={() => {
+													setSelectedArtwork(artwork);
+												}}
+											>
 												<h2>Title: {artwork.title}</h2>
 											</NavLink>
-											<p>
-												Artist: {artwork.artist_display || 'Unknown Artist'}
-											</p>
 										</li>
 									))}
 								</ul>
@@ -52,7 +59,10 @@ export function App() {
 						}
 						path="/"
 					/>
-					<Route element={<ImageDetailsPage />} path="/artwork/:id" />
+					<Route
+						element={<ImageDetailsPage artwork={selectedArtwork} />}
+						path="/artwork/:id"
+					/>
 				</Routes>
 				<Footer />
 			</div>

@@ -67,8 +67,7 @@ export function searchArtworks(query) {
 		 */
 	} else {
 		// Use encodeURIComponent to encode query String parameter values
-		// const requestUrl = `https://api.artic.edu/api/v1/artworks/search?q=${encodeURIComponent(query)}`;
-		const requestUrl = `https://api.artic.edu/api/v1/artworks`;
+		const requestUrl = `https://api.artic.edu/api/v1/artworks/search?q=${encodeURIComponent(query)}&query[term][is_public_domain]=true&fields=artist_title,date_display,image_id,thumbnail.alt_text,thumbnail.width,thumbnail.height,title`;
 		const headers = { Accept: 'application/json' };
 		return fetch(requestUrl, { headers }).then((res) => {
 			if (!res.ok) {
