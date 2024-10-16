@@ -9,4 +9,20 @@
 
 .App > h1 {
 	text-align: center;
+	font-size: 2rem;
+	margin-bottom: 1.5rem;
+	color: #333;
+}
+
+.results-list {
+	list-style-type: none;
+	padding: 0;
+}
+
+.results-list li {
+	background-color: #fff;
+	margin: 0.5rem 0;
+	padding: 1rem;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

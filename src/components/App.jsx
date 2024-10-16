@@ -1,6 +1,13 @@
 import { useState } from 'react';
+import {
+	BrowserRouter as Router,
+	Route,
+	Routes,
+	NavLink,
+} from 'react-router-dom';
 import { searchArtworks } from '../api';
 import { Footer } from './Footer';
+import { ImageDetailsPage } from './ImageDetailsPage';
 import { SearchForm } from './SearchForm';
 import './App.css';
 
@@ -21,19 +28,34 @@ export function App() {
 		});
 	}
 	return (
-		<div className="App">
-			<h1>TCL Career Lab Art Finder</h1>
-			<SearchForm onSearchSubmit={onSearchSubmit} />
-			<ul className="results-list">
-				{/* Implement optional chaining in case results is undefined or null */}
-				{results?.map((artwork) => (
-					<li key={artwork.id}>
-						<h2>Title: {artwork.title}</h2>
-						<p>Artist: {artwork.artist_display || 'Unknown Artist'}</p>
-					</li>
-				))}
-			</ul>
-			<Footer />
-		</div>
+		<Router>
+			<div className="App">
+				<Routes>
+					<Route
+						element={
+							<>
+								<h1>TCL Career Lab Art Finder</h1>
+								<SearchForm onSearchSubmit={onSearchSubmit} />
+								<ul className="results-list">
+									{results?.map((artwork) => (
+										<li key={artwork.id}>
+											<NavLink to={`/artwork/${artwork.id}`}>
+												<h2>Title: {artwork.title}</h2>
+											</NavLink>
+											<p>
+												Artist: {artwork.artist_display || 'Unknown Artist'}
+											</p>
+										</li>
+									))}
+								</ul>
+							</>
+						}
+						path="/"
+					/>
+					<Route element={<ImageDetailsPage />} path="/artwork/:id" />
+				</Routes>
+				<Footer />
+			</div>
+		</Router>
 	);
 }
