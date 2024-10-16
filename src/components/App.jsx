@@ -29,9 +29,7 @@ export function App() {
 			setResults(json);
 		});
 	}
-	const handleArtworkSelection = () => {
-		setSelectedArtwork(artwork);
-	};
+
 	return (
 		<Router>
 			<div className="App">
